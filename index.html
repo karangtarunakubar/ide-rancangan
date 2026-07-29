@@ -1,495 +1,895 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Struktur Pengurus & Bidang Karang Taruna</title>
-    <!-- Tailwind CSS CDN -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Karang Taruna Kabupaten Kutai Barat - Neumorphic Portal</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome untuk Ikon -->
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        .active-tab {
-            border-bottom: 3px solid #2563eb;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #e0e5ec;
+            color: #4a5568;
+        }
+
+        /* Styling Neumorphism Style Classes */
+        .neu-flat {
+            background: #e0e5ec;
+            box-shadow: 9px 9px 18px #a3b1c6, -9px -9px 18px #ffffff;
+            border-radius: 20px;
+        }
+
+        .neu-pressed {
+            background: #e0e5ec;
+            box-shadow: inset 6px 6px 12px #a3b1c6, inset -6px -6px 12px #ffffff;
+            border-radius: 20px;
+        }
+
+        .neu-btn {
+            background: #e0e5ec;
+            box-shadow: 6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff;
+            transition: all 0.2s ease-in-out;
+            border-radius: 12px;
+        }
+
+        .neu-btn:hover {
+            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+        }
+
+        .neu-btn:active, .neu-btn.active {
+            background: #e0e5ec;
+            box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
             color: #2563eb;
+        }
+
+        .neu-input {
+            background: #e0e5ec;
+            box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
+            border-radius: 12px;
+            outline: none;
+        }
+
+        .neu-circle {
+            background: #e0e5ec;
+            box-shadow: 6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff;
+            border-radius: 50%;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e0e5ec;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #a3b1c6;
+            border-radius: 10px;
+        }
+
+        /* Organization Chart Styles */
+        .org-wrap {
+            width: 100%;
+            overflow-x: auto;
+            padding: 1rem;
+        }
+
+        .org-svg {
+            background: linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0.12));
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .org-node-rect {
+            fill: #f8fafc;
+            stroke: #cbd5e1;
+            stroke-width: 1;
+            rx: 10;
+            ry: 10;
+        }
+        .org-node-text {
+            font-size: 12px;
+            fill: #1f2937;
             font-weight: 600;
         }
+        .org-node-sub {
+            font-size: 10px;
+            fill: #2563eb;
+            font-weight: 700;
+        }
+        .org-connector {
+            stroke: #93a3bd;
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        /* Avatar helper */
+        .avatar-sm { width: 44px; height: 44px; object-fit: cover; border-radius: 9999px; }
+        .avatar-xs { width: 28px; height: 28px; object-fit: cover; border-radius: 9999px; }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .org-node-text { font-size: 11px; }
+            .org-node-sub { font-size: 9px; }
+        }
+
     </style>
 </head>
-<body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col justify-between">
 
-    <!-- Header / Navbar -->
-    <header class="bg-indigo-900 text-white shadow-lg sticky top-0 z-30">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <i class="fa-solid fa-users-gear text-3xl text-amber-400"></i>
+    <!-- Header & Navigation -->
+    <header class="p-6">
+        <div class="max-w-7xl mx-auto neu-flat p-6 flex flex-col lg:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-4">
+                <div class="neu-circle w-16 h-16 flex items-center justify-center text-blue-600 text-2xl font-bold">
+                    <img src="karangtaruna.png">
+                </div>
                 <div>
-                    <h1 class="text-xl font-bold leading-tight">Portal Organisasi Karang Taruna</h1>
-                    <p class="text-xs text-indigo-200">Kabupaten Kutai Barat</p>
+                    <h1 class="text-2xl font-bold text-slate-800 tracking-wide">KARANG TARUNA KUTAI BARAT</h1>
+                    <p class="text-xs text-slate-500 font-medium">Masa Bakti 2024–2030 • Sentiyu Diq, Suletq.</p>
                 </div>
             </div>
-            <!-- Search Bar -->
-            <div class="relative w-full md:w-80">
-                <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Cari posisi, bidang, atau program..." class="w-full px-4 py-2 pl-10 rounded-lg text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white/90">
-                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-sm"></i>
+
+            <!-- Social Media Buttons Header -->
+            <div class="flex items-center gap-3">
+                <a href="https://instagram.com" target="_blank" class="neu-btn w-10 h-10 flex items-center justify-center text-pink-600"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://facebook.com" target="_blank" class="neu-btn w-10 h-10 flex items-center justify-center text-blue-700"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://youtube.com" target="_blank" class="neu-btn w-10 h-10 flex items-center justify-center text-red-600"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://tiktok.com" target="_blank" class="neu-btn w-10 h-10 flex items-center justify-center text-slate-800"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://wa.me/6281234567890" target="_blank" class="neu-btn w-10 h-10 flex items-center justify-center text-emerald-600"><i class="fa-brands fa-whatsapp"></i></a>
             </div>
         </div>
 
         <!-- Navigation Tabs -->
-        <nav class="bg-indigo-950 px-4">
-            <div class="max-w-7xl mx-auto flex overflow-x-auto space-x-6 text-sm">
-                <button onclick="switchTab('pengurus-inti')" id="tab-pengurus-inti" class="py-3 px-2 whitespace-nowrap active-tab hover:text-amber-300 transition">
-                    <i class="fa-solid fa-user-tie mr-2"></i>Pengurus Inti
-                </button>
-                <button onclick="switchTab('bidang')" id="tab-bidang" class="py-3 px-2 whitespace-nowrap text-indigo-200 hover:text-amber-300 transition">
-                    <i class="fa-solid fa-sitemap mr-2"></i>14 Bidang Kerja
-                </button>
-                <button onclick="switchTab('administrasi')" id="tab-administrasi" class="py-3 px-2 whitespace-nowrap text-indigo-200 hover:text-amber-300 transition">
-                    <i class="fa-solid fa-file-contract mr-2"></i>Pelaporan & SK
-                </button>
-            </div>
+        <nav class="max-w-7xl mx-auto mt-6 flex overflow-x-auto gap-3 p-2 text-xs font-semibold">
+            <button onclick="switchTab('pengurus')" id="tab-pengurus" class="neu-btn active px-5 py-3 whitespace-nowrap text-blue-600">
+                <i class="fa-solid fa-user-tie mr-2"></i>Pengurus Inti
+            </button>
+            <button onclick="switchTab('hirarki')" id="tab-hirarki" class="neu-btn px-5 py-3 whitespace-nowrap text-slate-600">
+                <i class="fa-solid fa-sitemap mr-2"></i>Hirarki Struktur
+            </button>
+            <button onclick="switchTab('bidang')" id="tab-bidang" class="neu-btn px-5 py-3 whitespace-nowrap text-slate-600">
+                <i class="fa-solid fa-layer-group mr-2"></i>14 Bidang & Anggota
+            </button>
+            <button onclick="switchTab('projects')" id="tab-projects" class="neu-btn px-5 py-3 whitespace-nowrap text-slate-600">
+                <i class="fa-solid fa-calendar-check mr-2"></i>Proyek Masa Kerja
+            </button>
+            <button onclick="switchTab('portofolio')" id="tab-portofolio" class="neu-btn px-5 py-3 whitespace-nowrap text-slate-600">
+                <i class="fa-solid fa-images mr-2"></i>Portofolio Kegiatan
+            </button>
+            <button onclick="switchTab('kecamatan')" id="tab-kecamatan" class="neu-btn px-5 py-3 whitespace-nowrap text-slate-600">
+                <i class="fa-solid fa-map-location-dot mr-2"></i>16 Kecamatan Kubar
+            </button>
         </nav>
     </header>
 
-    <!-- Main Content Area -->
-    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-6 py-4 flex-grow w-full">
 
-        <!-- TAB 1: PENGURUS INTI -->
-        <section id="section-pengurus-inti" class="tab-content block">
-            <div class="mb-6">
-                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
-                    <i class="fa-solid fa-crown text-amber-500"></i> Susunan Pengurus Inti
-                </h2>
-                <p class="text-slate-600 text-sm">Pengambil keputusan strategis dan penanggung jawab operasional utama organisasi.</p>
+        <!-- TAB: PENGURUS INTI -->
+        <section id="sec-pengurus" class="tab-content">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">Susunan Pengurus Inti</h2>
+                    <p class="text-xs text-slate-500">Pimpinan dan Sekretariat Utama Karang Taruna Kab. Kutai Barat</p>
+                </div>
             </div>
-            <div id="pengurus-inti-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Injected by JS -->
+            <div id="pengurus-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Injected via JS -->
             </div>
         </section>
 
-        <!-- TAB 2: 14 BIDANG KERJA -->
-        <section id="section-bidang" class="tab-content hidden">
-            <div class="mb-6">
-                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
-                    <i class="fa-solid fa-layer-group text-indigo-600"></i> Bidang & Divisi Operasional
-                </h2>
-                <p class="text-slate-600 text-sm">Klik kartu bidang untuk melihat struktur role, program kerja, dan indikator (KPI).</p>
+        <!-- TAB: HIRARKI STRUKTUR -->
+        <section id="sec-hirarki" class="tab-content hidden">
+            <div class="mb-4">
+                <h2 class="text-xl font-bold text-slate-800">Hirarki Struktur Pengurus</h2>
+                <p class="text-xs text-slate-500">Visualisasi hirarki organisasi Karang Taruna Kab. Kutai Barat (Ketua → Pengurus Inti → Koordinator Bidang → 14 Bidang)</p>
+            </div>
+
+            <div class="neu-flat p-4">
+                <div class="org-wrap">
+                    <!-- SVG org chart injected by JS -->
+                    <div id="orgChartContainer" class="org-svg"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: 14 BIDANG & ANGGOTA -->
+        <section id="sec-bidang" class="tab-content hidden">
+            <div class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">Struktur 14 Bidang & Anggota Pelaksana</h2>
+                    <p class="text-xs text-slate-500">Klik kartu bidang untuk melihat rincian pengurus, program, dan indikator</p>
+                </div>
+                <input type="text" id="searchBidang" oninput="filterBidang()" placeholder="Cari nama pengurus/bidang..." class="neu-input px-4 py-2 text-xs w-full md:w-64">
             </div>
             <div id="bidang-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Injected by JS -->
+                <!-- Injected via JS -->
             </div>
         </section>
 
-        <!-- TAB 3: PELAPORAN & TEMPLATE SK -->
-        <section id="section-administrasi" class="tab-content hidden">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- System Pelaporan -->
-                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="p-3 bg-blue-100 text-blue-600 rounded-lg">
-                            <i class="fa-solid fa-clipboard-list text-xl"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-bold">C. Tata Pelaporan Organisasi</h3>
-                            <p class="text-xs text-slate-500">Mekanisme & Akuntabilitas Kerja</p>
-                        </div>
-                    </div>
-                    <div class="space-y-4 text-sm text-slate-700">
-                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
-                            <p class="font-semibold text-slate-900 mb-1">Jadwal Pelaporan:</p>
-                            <ul class="list-disc pl-5 space-y-1">
-                                <li><strong>Bulanan:</strong> Diserahkan ke Sekretariat.</li>
-                                <li><strong>Triwulan:</strong> Laporan evaluasi ke Ketua Umum.</li>
-                                <li><strong>Tahunan:</strong> Evaluasi akhir tahun masa bakti.</li>
-                            </ul>
-                        </div>
-                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
-                            <p class="font-semibold text-slate-900 mb-1">Format Wajib Laporan:</p>
-                            <p>Ringkasan Kegiatan | Anggaran Terpakai | Kebutuhan/Kendala</p>
-                        </div>
-                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
-                            <p class="font-semibold text-slate-900 mb-1">Indikator Evaluasi (KPI):</p>
-                            <p>Kepatuhan Pelaporan (%) & Ketepatan Waktu Pengiriman.</p>
-                        </div>
-                        <div class="p-3 bg-amber-50 text-amber-900 border border-amber-200 rounded-lg flex items-center gap-2">
-                            <i class="fa-solid fa-triangle-exclamation text-amber-600"></i>
-                            <span>Catatan: Seluruh laporan diserahkan langsung ke <strong>Sekretaris Umum</strong>.</span>
-                        </div>
-                    </div>
+        <!-- TAB 3: PROYEK MASA KERJA 2-3 TAHUN -->
+        <section id="sec-projects" class="tab-content hidden">
+            <div class="mb-6">
+                <h2 class="text-xl font-bold text-slate-800">Roadmap Proyek Strategis Masa Bakti (3 Tahun)</h2>
+                <p class="text-xs text-slate-500">Rencana Kerja Unggulan Karang Taruna Kabupaten Kutai Barat</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="neu-flat p-6">
+                    <div class="neu-circle w-12 h-12 flex items-center justify-center text-blue-600 font-bold mb-4">TH 1</div>
+                    <h3 class="font-bold text-slate-800 text-base mb-2">Tahun I: Konsolidasi & Digitalisasi</h3>
+                    <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
+                        <li>Pendataan ulang & pemetaan Karang Taruna di 16 Kecamatan.</li>
+                        <li>Peluncuran Portal Sistem Informasi & Database Kader.</li>
+                        <li>Pelatihan Manajemen Administrasi & Tata Kelola Keuangan.</li>
+                    </ul>
                 </div>
+                <div class="neu-flat p-6">
+                    <div class="neu-circle w-12 h-12 flex items-center justify-center text-amber-600 font-bold mb-4">TH 2</div>
+                    <h3 class="font-bold text-slate-800 text-base mb-2">Tahun II: Akselerasi Ekonomi & Sosial</h3>
+                    <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
+                        <li>Pembentukan 50 UMKM Pemuda Berbasis Digital Lokal.</li>
+                        <li>Inisiasi Program Desa Tanggap Bencana & Kebersihan Lingkungan.</li>
+                        <li>Penyelenggaraan Festival Seni Budaya & Olahraga Antar Kecamatan.</li>
+                    </ul>
+                </div>
+                <div class="neu-flat p-6">
+                    <div class="neu-circle w-12 h-12 flex items-center justify-center text-emerald-600 font-bold mb-4">TH 3</div>
+                    <h3 class="font-bold text-slate-800 text-base mb-2">Tahun III: Kemandirian & Evaluasi</h3>
+                    <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
+                        <li>Sertifikasi Keterampilan Vokasional Kader Pemuda.</li>
+                        <li>Ekspansi Produk Pariwisata Komunitas Berbasis Tokoh Adat.</li>
+                        <li>Musyawarah Daerah Evaluasi Masa Bakti & Regenerasi Kepemimpinan.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
-                <!-- Template SK -->
-                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="p-3 bg-emerald-100 text-emerald-600 rounded-lg">
-                                <i class="fa-solid fa-file-pdf text-xl"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-bold">D. Template SK & Legalitas</h3>
-                                <p class="text-xs text-slate-500">Format Surat Keputusan Organisasi</p>
-                            </div>
-                        </div>
-                        <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-xs mb-4 space-y-2 overflow-x-auto">
-                            <p class="text-slate-400">// Contoh Judul & Format SK</p>
-                            <p class="font-bold text-white">SURAT KEPUTUSAN KETUA KARANG TARUNA KABUPATEN KUTAI BARAT</p>
-                            <p>Nomor: [Nomor_Surat]/SK/KT-KUBAR/[Tahun]</p>
-                            <p>Tentang: Pengangkatan Pengurus Karang Taruna Masa Bakti [Tahun]</p>
-                            <p class="text-slate-400">// Lampiran PDF</p>
-                            <p>Termasuk susunan pengurus inti & 14 bidang beserta penugasan resmi.</p>
-                        </div>
-                    </div>
-                    <button onclick="alert('Mengunduh contoh template SK...')" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-download"></i> Unduh Template SK (PDF)
-                    </button>
-                </div>
+        <!-- TAB 4: PORTOFOLIO KEGIATAN -->
+        <section id="sec-portofolio" class="tab-content hidden">
+            <div class="mb-6">
+                <h2 class="text-xl font-bold text-slate-800">Portofolio & Rekam Jejak Aksi</h2>
+                <p class="text-xs text-slate-500">Dokumentasi dampak nyata Karang Taruna bagi masyarakat Kutai Barat</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="portofolio-grid">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
+        <!-- TAB 5: DATA 16 KECAMATAN KUTAI BARAT -->
+        <section id="sec-kecamatan" class="tab-content hidden">
+            <div class="mb-6">
+                <h2 class="text-xl font-bold text-slate-800">Profil & Keunggulan 16 Kecamatan Kutai Barat</h2>
+                <p class="text-xs text-slate-500">Pemetaan potensi wilayah untuk kolaborasi program Karang Taruna</p>
+            </div>
+            <div id="kecamatan-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Injected via JS -->
             </div>
         </section>
 
     </main>
 
-    <!-- Modal Detail Bidang -->
-    <div id="modalBidang" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative flex flex-col">
-            <!-- Modal Header -->
-            <div class="p-6 bg-indigo-900 text-white rounded-t-2xl sticky top-0 z-10 flex justify-between items-start">
+    <!-- Modal Detail Bidang & Anggota -->
+    <div id="modalBidang" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="neu-flat bg-[#e0e5ec] max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 relative flex flex-col gap-4">
+            <div class="flex justify-between items-start border-b border-slate-300 pb-3">
                 <div>
-                    <span id="modalKode" class="text-xs bg-amber-400 text-slate-900 font-bold px-2 py-0.5 rounded uppercase">Kode</span>
-                    <h3 id="modalJudul" class="text-xl font-bold mt-1">Nama Bidang</h3>
+                    <span id="modalKode" class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded">KODE</span>
+                    <h3 id="modalJudul" class="text-lg font-bold text-slate-800 mt-1">Nama Bidang</h3>
                 </div>
-                <button onclick="closeModal()" class="text-white/80 hover:text-white text-2xl font-bold leading-none">&times;</button>
+                <button onclick="closeModal()" class="neu-btn w-8 h-8 flex items-center justify-center text-slate-600 font-bold">&times;</button>
             </div>
 
-            <!-- Modal Body -->
-            <div class="p-6 space-y-6 flex-grow">
-                <!-- Deskripsi Ketua -->
+            <div class="space-y-4 text-xs">
                 <div>
-                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Tugas Utama Ketua Bidang</h4>
-                    <p id="modalDeskripsi" class="text-slate-700 text-sm bg-slate-50 p-3 rounded-lg border border-slate-100">---</p>
+                    <h4 class="font-bold text-slate-700 uppercase mb-1">Ketua Bidang & Deskripsi</h4>
+                    <div class="flex items-center gap-3 mb-1">
+                        <img id="modalKetuaPhoto" src="" alt="Foto Ketua" class="avatar-sm">
+                        <p id="modalKetua" class="font-semibold text-blue-600 mb-0">Nama Ketua</p>
+                    </div>
+                    <p id="modalDesc" class="text-slate-600 neu-pressed p-3">Deskripsi tugas...</p>
                 </div>
 
-                <!-- Struktur Roles -->
                 <div>
-                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Struktur Internal Bidang</h4>
-                    <div id="modalRoles" class="flex flex-wrap gap-2">
-                        <!-- JS injected -->
+                    <h4 class="font-bold text-slate-700 uppercase mb-2">Anggota Pengurus Bidang</h4>
+                    <div id="modalAnggota" class="flex flex-wrap gap-3">
+                        <!-- JS injected: photo cards per anggota -->
                     </div>
                 </div>
 
-                <!-- Program Kerja -->
                 <div>
-                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Program Kerja Utama</h4>
-                    <ul id="modalPrograms" class="list-disc pl-5 text-sm text-slate-700 space-y-1">
-                        <!-- JS injected -->
-                    </ul>
+                    <h4 class="font-bold text-slate-700 uppercase mb-1">Program Kerja Utama</h4>
+                    <ul id="modalPrograms" class="list-disc pl-4 text-slate-600 space-y-1"></ul>
                 </div>
 
-                <!-- Indikator KPI -->
                 <div>
-                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Indikator Keberhasilan (KPI)</h4>
-                    <div id="modalKPI" class="flex flex-wrap gap-2">
-                        <!-- JS injected -->
-                    </div>
+                    <h4 class="font-bold text-slate-700 uppercase mb-1">Indikator Keberhasilan (KPI)</h4>
+                    <p id="modalKPI" class="text-slate-600 neu-pressed p-3"></p>
                 </div>
 
-                <!-- Catatan / Notes -->
-                <div id="modalNotesContainer" class="p-3 bg-amber-50 border border-amber-200 rounded-lg text-sm text-amber-900">
-                    <span class="font-bold"><i class="fa-solid fa-lightbulb mr-1 text-amber-600"></i> Catatan Khusus:</span>
-                    <p id="modalNotes" class="mt-0.5 text-xs text-amber-800">---</p>
+                <div id="modalNotesBox">
+                    <h4 class="font-bold text-amber-700 uppercase mb-1"><i class="fa-solid fa-note-sticky mr-1"></i>Catatan Lapangan</h4>
+                    <p id="modalNotes" class="text-amber-900 bg-amber-100 p-3 rounded-lg"></p>
                 </div>
             </div>
 
-            <!-- Modal Footer -->
-            <div class="p-4 bg-slate-50 border-t border-slate-100 rounded-b-2xl flex justify-end">
-                <button onclick="closeModal()" class="px-5 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-sm font-semibold rounded-lg transition">Tutup</button>
+            <div class="flex justify-end pt-2">
+                <button onclick="closeModal()" class="neu-btn px-6 py-2 text-xs font-bold text-slate-700">Tutup</button>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs border-t border-slate-800">
-        <p>&copy; 2026 Karang Taruna Kabupaten Kutai Barat. Sistem Informasi Manajemen Organisasi.</p>
+    <footer class="p-6 mt-6">
+        <div class="max-w-7xl mx-auto neu-flat p-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+            <div>
+                <p class="font-bold text-slate-700">Sekretariat Karang Taruna Kutai Barat</p>
+                <p>Jl. Sendawar Raya No. 01, Sendawar, Kabupaten Kutai Barat, Kalimantan Timur</p>
+            </div>
+            <div class="text-right">
+                <p>&copy; 2026 Karang Taruna Kutai Barat. All Rights Reserved.</p>
+                <p class="text-[10px] text-slate-400">Neumorphic UI Component Design</p>
+            </div>
+        </div>
     </footer>
 
-    <!-- JavaScript Application Logic -->
+    <!-- App JavaScript Logic -->
     <script>
-        // DATA STORE
+        /**
+         * Helper: generate a small avatar image URL (ui-avatars)
+         * - Uses the provided name to create a consistent avatar.
+         * - You can replace with real image URLs later (e.g., /images/pengurus/yohanes.jpg).
+         */
+        function avatarUrl(name, size = 128, bg = 'E0E5EC', color = '1F2937') {
+            if (!name) name = 'User';
+            return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=${bg}&color=${color}&size=${size}&rounded=true`;
+        }
+
+        // DATA 1: PENGURUS INTI
         const pengurusIntiData = [
-            { role: "Ketua Umum", desc: "Pimpinan tertinggi organisasi; pengambilan keputusan strategis.", notes: "Masa bakti: 2/3 tahun; rapat bulanan", icon: "fa-user-gear" },
-            { role: "Wakil Ketua", desc: "Membantu Ketua Umum, menggantikan jika berhalangan.", notes: "-", icon: "fa-user-check" },
-            { role: "Sekretaris Umum", desc: "Administrasi organisasi, pencatatan rapat, korespondensi.", notes: "-", icon: "fa-file-signature" },
-            { role: "Wakil Sekretaris", desc: "Mendampingi Sekretaris Umum.", notes: "-", icon: "fa-file-lines" },
-            { role: "Bendahara Umum", desc: "Pengelolaan keuangan organisasi, laporan keuangan.", notes: "SOP keuangan wajib", icon: "fa-wallet" },
-            { role: "Koordinator Bidang", desc: "Koordinator untuk tiap bidang (14 bidang).", notes: "Satu koordinator per bidang", icon: "fa-diagram-project" },
-            { role: "Dewan Penasehat", desc: "Tokoh masyarakat/pemerintah sebagai penasihat.", notes: "Opsional; bisa wakil kecamatan/desa", icon: "fa-user-shield" }
+            { nama: "Yohanes Setiawan, S.Sos.", role: "Ketua Umum", desc: "Pimpinan tertinggi organisasi; pengambilan keputusan strategis.", notes: "Masa bakti: 3 tahun; Rapat Bulanan", photo: avatarUrl("Yohanes Setiawan"), icon: "fa-user-tie" },
+            { nama: "Rahmat Hidayat, S.T.", role: "Wakil Ketua", desc: "Membantu Ketua Umum, menggantikan jika berhalangan.", notes: "-", photo: avatarUrl("Rahmat Hidayat"), icon: "fa-user-check" },
+            { nama: "Maria Bunga, S.Pd.", role: "Sekretaris Umum", desc: "Administrasi organisasi, pencatatan rapat, korespondensi.", notes: "-", photo: avatarUrl("Maria Bunga"), icon: "fa-file-signature" },
+            { nama: "FX. Daniel Purba", role: "Wakil Sekretaris", desc: "Mendampingi Sekretaris Umum.", notes: "-", photo: avatarUrl("Daniel Purba"), icon: "fa-file-lines" },
+            { nama: "Lia Anugrah, A.Md.Ak.", role: "Bendahara Umum", desc: "Pengelolaan keuangan organisasi, laporan keuangan.", notes: "SOP keuangan wajib", photo: avatarUrl("Lia Anugrah"), icon: "fa-wallet" },
+            { role: "Koordinator Bidang", nama: "Budi Santoso, S.IP.", desc: "Koordinator penyeimbang untuk tiap bidang (14 bidang).", notes: "Satu koordinator per bidang", photo: avatarUrl("Budi Santoso"), icon: "fa-sitemap" },
+            { role: "Dewan Penasehat", nama: "Drs. H. Thomas Budi (Tokoh Masy.)", desc: "Tokoh masyarakat/pemerintah sebagai penasihat.", notes: "Opsional; wakil kecamatan/desa", photo: avatarUrl("Thomas Budi"), icon: "fa-user-shield" }
         ];
 
+        // DATA 2: 14 BIDANG + ANGGOTA
         const bidangData = [
             {
                 kode: "B1",
-                nama: "Bidang Organisasi, Kaderisasi & Pengembangan SDM",
+                nama: "BIDANG ORGANISASI, KADERISASI & PENGEMBANGAN SDM",
+                ketua: "Dedi Kurniawan, M.Pd.",
                 desc: "Memimpin program kaderisasi dan pengembangan kapasitas.",
-                roles: ["Ketua Bidang", "Wakil Ketua Bidang", "Sekretaris Bidang", "Bendahara/Koord Program", "Anggota Pelaksana"],
-                programs: ["Program Kaderisasi", "Pelatihan manajemen organisasi & administrasi", "Pembinaan kader desa/kecamatan"],
-                kpi: ["Jumlah kader terlatih", "Tingkat retensi anggota", "Jumlah kader aktif"],
+                anggota: ["Wakil Ketua Bidang: Antonius G.", "Sekretaris Bidang: Nina R.", "Bendahara: Siska A.", "Anggota: Fajar M.", "Anggota: Petrus K."],
+                programs: ["Program Kaderisasi Desa", "Pelatihan Manajemen Organisasi", "Pembinaan Kader Kecamatan"],
+                kpi: "Jumlah kader terlatih | Retensi anggota | Kader aktif",
                 notes: ""
             },
             {
                 kode: "B2",
-                nama: "Bidang Kesejahteraan Sosial",
+                nama: "BIDANG KESEJAHTERAAN SOSIAL",
+                ketua: "Siti Nurhaliza, S.Tr.Sos.",
                 desc: "Koordinasi program sosial & bantuan masyarakat rentan.",
-                roles: ["Ketua Bidang", "Wakil Ketua Bidang", "Sekretaris Bidang"],
-                programs: ["Pendataan & pendampingan keluarga rentan", "Bantuan darurat & distribusi", "Program kesehatan dasar"],
-                kpi: ["Jumlah keluarga dibantu", "Kepuasan penerima manfaat", "Frekuensi aksi tanggap"],
-                notes: "Kerja sama puskesmas/dinas sosial"
+                anggota: ["Wakil Ketua: Herman W.", "Sekretaris: Maya K.", "Anggota: Simon", "Anggota: Clara", "Anggota: Lukas"],
+                programs: ["Pendataan Keluarga Rentan", "Bantuan Darurat Bencana", "Program Kesehatan Dasar"],
+                kpi: "Jumlah keluarga dibantu | Kepuasan penerima manfaat | Frekuensi tanggap sosial",
+                notes: "Kerja sama Puskesmas & Dinas Sosial"
             },
             {
                 kode: "B3",
-                nama: "Bidang Perekonomian, Koperasi & UMKM",
+                nama: "BIDANG PEREKONOMIAN, KOPERASI & UMKM",
+                ketua: "Agus Pratama, S.E.",
                 desc: "Fasilitasi pengembangan UMKM, koperasi, akses pembiayaan.",
-                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
-                programs: ["Pelatihan kewirausahaan & pemasaran digital", "Pendampingan koperasi pemuda", "Pameran produk lokal"],
-                kpi: ["Jumlah UMKM didampingi", "Peningkatan omzet rata-rata", "Koperasi terdaftar"],
-                notes: "Fokus pemasaran lokal & digital"
+                anggota: ["Wakil Ketua: Hendra L.", "Anggota: Dewi", "Anggota: Martinus", "Anggota: Asep"],
+                programs: ["Pelatihan Kewirausahaan Digital", "Pendampingan Koperasi Pemuda", "Pameran Produk Lokal Kubar"],
+                kpi: "Jumlah UMKM didampingi | Peningkatan omzet | Koperasi terdaftar",
+                notes: "Fokus pemasaran produk lokal secara digital"
             },
             {
                 kode: "B4",
-                nama: "Bidang Pengembangan Pendidikan, Keagamaan & Pembinaan Mental",
+                nama: "BIDANG PENGEMBANGAN PENDIDIKAN, KEAGAMAAN & PEMBINAAN MENTAL",
+                ketua: "Pdt. Samuel Lin, M.Th.",
                 desc: "Program literasi, bimbel, pembinaan keagamaan & kesehatan mental.",
-                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
-                programs: ["Bimbel gratis", "Kajian keagamaan lintas pemuda", "Layanan konseling mental"],
-                kpi: ["Peserta bimbel & kenaikan nilai", "Sesi konseling", "Partisipasi kajian"],
+                anggota: ["Wakil Ketua: Ust. Ahmad Fauzi", "Anggota: Sarah", "Anggota: Kevin", "Anggota: Rizky"],
+                programs: ["Bimbel Gratis Pemuda Desa", "Kajian Keagamaan Lintas Pemuda", "Layanan Konseling Mental"],
+                kpi: "Peserta bimbel & kenaikan nilai | Sesi konseling | Partisipasi kajian",
                 notes: "Kerja sama sekolah & lembaga keagamaan"
             },
             {
                 kode: "B5",
-                nama: "Bidang Pemberdayaan Perempuan & Perlindungan Anak",
+                nama: "BIDANG PEMBERDAYAAN PEREMPUAN & PERLINDUNGAN ANAK",
+                ketua: "Kristina Maya, S.H.",
                 desc: "Advokasi hak perempuan & anak; pemberdayaan ekonomi perempuan.",
-                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
-                programs: ["Pelatihan keterampilan ekonomi perempuan", "Sosialisasi perlindungan anak & posko pengaduan", "Support group korban kekerasan"],
-                kpi: ["Jumlah peserta", "Kasus tertangani & rujukan", "Akses layanan meningkat"],
+                anggota: ["Wakil Ketua: Nuraini, S.Pd.", "Anggota: Yuliana", "Anggota: Grace", "Anggota: Rani"],
+                programs: ["Pelatihan Ekonomi Kreatif Perempuan", "Sosialisasi Perlindungan Anak", "Support Group Korban Kekerasan"],
+                kpi: "Jumlah peserta | Kasus tertangani | Akses layanan meningkat",
                 notes: "Koordinasi Dinas PPA/LBH"
             },
             {
                 kode: "B6",
-                nama: "Bidang Pemuda & Olahraga",
+                nama: "BIDANG PEMUDA & OLAHRAGA",
+                ketua: "Eko Sulistyo, S.Or.",
                 desc: "Pembinaan olahraga, klub, kegiatan sehat.",
-                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
-                programs: ["Turnamen antar desa/kecamatan", "Pembentukan klub atlet", "Program gaya hidup sehat"],
-                kpi: ["Jumlah event & peserta", "Atlet daerah", "Tingkat partisipasi pemuda"],
-                notes: "Fokus pembinaan berkelanjutan"
+                anggota: ["Wakil Ketua: Markus B.", "Anggota: Bayu", "Anggota: Andre", "Anggota: Mario"],
+                programs: ["Turnamen Sepakbola/Voli Antar Desa", "Pembentukan Klub Atlet Muda", "Program Gaya Hidup Sehat"],
+                kpi: "Jumlah event & peserta | Atlet daerah terdaftar | Partisipasi pemuda",
+                notes: "Fokus pembinaan atlet secara berkelanjutan"
             },
             {
                 kode: "B7",
-                nama: "Bidang Seni Budaya & Pariwisata",
+                nama: "BIDANG SENI BUDAYA & PARIWISATA",
+                ketua: "Niko Demus (Tokoh Pemuda Adat)",
                 desc: "Pelestarian budaya & pengembangan pariwisata berbasis komunitas.",
-                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
-                programs: ["Festival seni budaya tahunan", "Pelatihan pemandu wisata & homestay", "Dokumentasi budaya lokal"],
-                kpi: ["Jumlah event & pengunjung", "Dokumentasi budaya", "Pemasukan pariwisata komunitas"],
-                notes: "Libatkan tokoh adat"
+                anggota: ["Wakil Ketua: Tari Melati", "Anggota: Gabriel", "Anggota: Budi", "Anggota: Sinta"],
+                programs: ["Festival Seni Budaya Dayak Kubar", "Pelatihan Pemandu Wisata & Homestay", "Dokumentasi Budaya Lokal"],
+                kpi: "Jumlah event & pengunjung | Dokumentasi budaya | Pemasukan pariwisata",
+                notes: "Wajib melibatkan Tokoh Adat setempat"
             },
             {
                 kode: "B8",
-                nama: "Bidang Lingkungan Hidup",
+                nama: "BIDANG LINGKUNGAN HIDUP",
+                ketua: "Dicky Wahyudi, S.Hut.",
                 desc: "Aksi konservasi, kebersihan, penghijauan.",
-                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
-                programs: ["Gerakan bersih desa/sungai", "Penghijauan & reboisasi", "Sosialisasi pengelolaan sampah & 3R"],
-                kpi: ["Areal penghijauan", "Volume sampah terkelola", "Partisipasi masyarakat"],
-                notes: "Kerja sama Dinas Lingkungan"
+                anggota: ["Wakil Ketua: Fransiskus", "Anggota: Joko", "Anggota: Tari", "Anggota: Rahman"],
+                programs: ["Gerakan Bersih Sungai Mahakam/Kubar", "Penghijauan & Reboisasi Hutan", "Sosialisasi Pengelolaan Sampah 3R"],
+                kpi: "Luas areal penghijauan | Volume sampah terkelola | Partisipasi warga",
+                notes: "Kerja sama dengan Dinas Lingkungan Hidup"
             },
             {
                 kode: "B9",
-                nama: "Bidang Advokasi, Hukum & HAM",
+                nama: "BIDANG ADVOKASI, HUKUM & HAM",
+                ketua: "Rian Hidayat, S.H., M.H.",
                 desc: "Advokasi kebijakan pro-pemuda, bantuan informasi hukum dasar.",
-                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
-                programs: ["Klinik hukum keliling", "Kampanye HAM & hak pemuda", "Advokasi kebijakan publik"],
-                kpi: ["Jumlah kasus didampingi", "Rekomendasi regulasi", "Kegiatan advokasi terealisasi"],
-                notes: "Kerja sama LKBH/LSM hukum"
+                anggota: ["Wakil Ketua: Yohana, S.H.", "Anggota: Bobi", "Anggota: Aris"],
+                programs: ["Klinik Hukum Keliling Desa", "Kampanye HAM & Hak Pemuda", "Advokasi Kebijakan Publik"],
+                kpi: "Jumlah kasus didampingi | Rekomendasi regulasi | Kegiatan advokasi",
+                notes: "Kerja sama LKBH/LSM Hukum"
             },
             {
                 kode: "B10",
-                nama: "Bidang Media dan Publikasi",
+                nama: "BIDANG MEDIA DAN PUBLIKASI",
+                ketua: "Fikri Ardiansyah, S.I.Kom.",
                 desc: "Komunikasi internal/eksternal, dokumentasi kegiatan.",
-                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
-                programs: ["Konten & kalender publikasi", "Dokumentasi audio-visual", "Arsip digital kegiatan"],
-                kpi: ["Jangkauan & engagement", "Konsistensi publikasi", "Ketersediaan arsip"],
+                anggota: ["Wakil Ketua: Doni Velo", "Anggota: Alan", "Anggota: Vivi", "Anggota: Jessica"],
+                programs: ["Manajemen Konten Medsos Organisasi", "Dokumentasi Audio-Visual", "Arsip Digital Kegiatan"],
+                kpi: "Jangkauan & engagement media | Konsistensi publikasi | Arsip digital",
                 notes: "Manajemen media sosial terpusat"
             },
             {
                 kode: "B11",
-                nama: "Bidang Hubungan Masyarakat & Antar Lembaga",
+                nama: "BIDANG HUBUNGAN MASYARAKAT & ANTAR LEMBAGA",
+                ketua: "Stefanus Leo, S.IP.",
                 desc: "Jejaring dengan pemerintah, LSM, kampus, swasta.",
-                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
-                programs: ["MoU dengan instansi strategis", "Forum antar lembaga", "Fasilitasi partisipasi pemuda di musyawarah"],
-                kpi: ["Jumlah kerjasama resmi", "Partisipasi forum", "Sumber pendanaan kolaboratif"],
-                notes: "Bangun relasi jangka panjang"
+                anggota: ["Wakil Ketua: Nurjanah", "Anggota: Kiki", "Anggota: Daniel"],
+                programs: ["MoU Kemitraan Strategis", "Forum Dialog Antar Lembaga", "Partisipasi Pemuda di Musrenbang"],
+                kpi: "Jumlah kerjasama resmi | Partisipasi forum | Pendanaan kolaboratif",
+                notes: "Membangun relasi kemitraan jangka panjang"
             },
             {
                 kode: "B12",
-                nama: "Bidang Penanggulangan Bencana",
+                nama: "BIDANG PENANGGULANGAN BENCANA",
+                ketua: "Ahmad Zaini (Relawan Tagana)",
                 desc: "Mitigasi, kesiapsiagaan & respon cepat bencana.",
-                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
-                programs: ["Pelatihan tanggap darurat & simulasi", "Tim relawan siaga bencana", "Gudang & logistik bantuan"],
-                kpi: ["Waktu respons", "Jumlah relawan terlatih", "Kesiapan logistik"],
-                notes: "Sinkronisasi BPBD & dinas terkait"
+                anggota: ["Wakil Ketua: Yanus", "Anggota: Taufik", "Anggota: Ruben", "Anggota: Jono"],
+                programs: ["Pelatihan Simulasi Tanggap Darurat", "Pembentukan Tim Relawan Siaga", "Pengelolaan Logistik Bantuan"],
+                kpi: "Waktu respons bencana | Jumlah relawan terlatih | Kesiapan logistik",
+                notes: "Sinkronisasi dengan BPBD Kubar"
             },
             {
                 kode: "B13",
-                nama: "Bidang Pemberdayaan Masyarakat",
+                nama: "BIDANG PEMBERDAYAAN MASYARAKAT",
+                ketua: "Drs. Paulus Budi",
                 desc: "Program inklusif peningkatan kapasitas masyarakat.",
-                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
-                programs: ["Pelatihan vokasi", "Program inklusi sosial", "Fasilitasi kelompok swadaya"],
-                kpi: ["Peserta tersertifikasi", "Integrasi kelompok rentan", "Dampak ekonomi rumah tangga"],
-                notes: "Koordinasi perangkat desa"
+                anggota: ["Wakil Ketua: Sri Lestari", "Anggota: Andi", "Anggota: Maria"],
+                programs: ["Pelatihan Vokasi Tukang & Las", "Program Inklusi Sosial Terpadu", "Fasilitasi Kelompok Swadaya"],
+                kpi: "Peserta tersertifikasi | Integrasi kelompok rentan | Dampak ekonomi",
+                notes: "Koordinasi perangkat desa setempat"
             },
             {
                 kode: "B14",
-                nama: "Bidang Penelitian, Pengembangan & Teknologi",
+                nama: "BIDANG PENELITIAN, PENGEMBANGAN & TEKNOLOGI",
+                ketua: "Edo Erpani",
                 desc: "Riset kebutuhan & inovasi teknologi komunitas.",
-                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
-                programs: ["Survei kebutuhan & evaluasi program", "Solusi teknologi untuk UMKM/pendidikan", "Workshop literasi digital"],
-                kpi: ["Laporan riset terbit", "Adopsi teknologi", "Efisiensi program meningkat"],
-                notes: "Dokumentasi & dashboard data"
+                anggota: ["Wakil Ketua: Indra Helat", "Anggota: Indah", "Anggota: Teddy"],
+                programs: ["Survei Kebutuhan Kepemudaan", "Solusi Teknologi Tepat Guna UMKM", "Workshop Literasi Digital"],
+                kpi: "Laporan riset terbit | Adopsi teknologi | Efisiensi program",
+                notes: "Pengelolaan dashboard data organisasi"
             }
+        ];
+
+        // DATA 3: PORTOFOLIO
+        const portofolioData = [
+            { judul: "Pelatihan UMKM Pemuda Sendawar", tgl: "12 Feb 2025", desc: "Pelatihan pemasaran digital bagi 45 pelaku usaha muda Kutai Barat.", tag: "Ekonomi" },
+            { judul: "Aksi Tanggap Bencana Banjir", tgl: "05 Mei 2025", desc: "Penyaluran sembako & posko logistik di Kecamatan Tering & Long Iram.", tag: "Sosial" },
+            { judul: "Penanaman 1.000 Pohon Mahoni", tgl: "10 Ags 2025", desc: "Aksi hijau reboisasi di kawasan hutan kota bersama Dinas Lingkungan.", tag: "Lingkungan" }
+        ];
+
+        // DATA 4: 16 KECAMATAN KUTAI BARAT
+        const kecamatanData = [
+            { nama: "Barong Tongkok", pusat: "Sendawar", keunggulan: "Pusat Pemerintahan, Perdagangan, & Jasa Utama" },
+            { nama: "Melak", pusat: "Melak", keunggulan: "Pusat Logistik Sungai, Pelabuhan, & Ekonomi Kerakyatan" },
+            { nama: "Sekolaq Darat", pusat: "Sekolaq Darat", keunggulan: "Pariwisata Budaya, Anggrek Hitam, & Kerajinan Tangan" },
+            { nama: "Linggang Bigung", pusat: "Linggang Bigung", keunggulan: "Pertanian Hortikultura & Perkebunan Buah Lokal" },
+            { nama: "Bongan", pusat: "Muara Kedang", keunggulan: "Gerbang Koridor Strategis IKN & Potensi Perkebunan" },
+            { nama: "Jempang", pusat: "Tanjung Isuy", keunggulan: "Pariwisata Danau Jempang, Doyo Weaving, & Perikanan" },
+            { nama: "Muara Pahu", pusat: "Tanjung Laong", keunggulan: "Konservasi Pesut Mahoni & Perikanan Air Tawar" },
+            { nama: "Penyinggahan", pusat: "Penyinggahan", keunggulan: "Sentra Pengolahan Ikan Asin & Industri Perikanan" },
+            { nama: "Muara Lawa", pusat: "Muara Lawa", keunggulan: "Situs Sejarah Budaya Dayak Benuaq & Pertambangan" },
+            { nama: "Damai", pusat: "Damai", keunggulan: "Kehutanan, Hutan Adat, & Potensi Sumber Daya Alam" },
+            { nama: "Nyuatan", pusat: "Dempar", keunggulan: "Pertanian Padi Gunung & Produk Alam Organik" },
+            { nama: "Tering", pusat: "Tering Seberang", keunggulan: "Sentra Pertanian Padi Sawah & Komoditas Jagung" },
+            { nama: "Long Iram", pusat: "Long Iram", keunggulan: "Kawasan Bersejarah Sejak Era Kolonial & Perdagangan" },
+            { nama: "Bentian Besar", pusat: "Dilang Puti", keunggulan: "Sentra Kerajinan Rotan Dayak Bentian & Perkebunan" },
+            { nama: "Mook Manaar Bulatn", pusat: "Gunung Bayan", keunggulan: "Potensi Perkebunan Kelapa Sawit & Ketahanan Pangan" },
+            { nama: "Siluq Ngurai", pusat: "Muhur", keunggulan: "Pelestarian Hutan Konservasi & Adat Istiadat" }
         ];
 
         // INITIALIZATION
         document.addEventListener('DOMContentLoaded', () => {
-            renderPengurusInti(pengurusIntiData);
+            renderPengurus();
             renderBidang(bidangData);
+            renderPortofolio();
+            renderKecamatan();
+            renderHirarki(); // Render the org chart with avatars shown in lists/cards
         });
 
-        // RENDER PENGURUS INTI
-        function renderPengurusInti(data) {
-            const container = document.getElementById('pengurus-inti-grid');
-            container.innerHTML = '';
-            
-            data.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'bg-white rounded-xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition flex flex-col justify-between';
-                card.innerHTML = `
+        // RENDER FUNCTIONS
+        function renderPengurus() {
+            const container = document.getElementById('pengurus-grid');
+            container.innerHTML = pengurusIntiData.map(item => `
+                <div class="neu-flat p-6 flex flex-col justify-between">
                     <div>
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="p-3 bg-indigo-50 text-indigo-600 rounded-lg">
-                                <i class="fa-solid ${item.icon} text-lg"></i>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="neu-circle w-12 h-12 flex items-center justify-center overflow-hidden">
+                                <img src="${item.photo}" alt="Foto ${escapeHtml(item.nama)}" class="w-12 h-12 object-cover rounded-full" />
                             </div>
-                            <h3 class="font-bold text-slate-800 text-lg">${item.role}</h3>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-base">${escapeHtml(item.role)}</h3>
+                                <p class="text-xs text-blue-600 font-semibold">${escapeHtml(item.nama)}</p>
+                            </div>
                         </div>
-                        <p class="text-slate-600 text-sm mb-4 leading-relaxed">${item.desc}</p>
+                        <p class="text-xs text-slate-600 mb-4">${escapeHtml(item.desc)}</p>
                     </div>
                     ${item.notes && item.notes !== '-' ? `
-                        <div class="pt-3 border-t border-slate-100 text-xs text-amber-700 bg-amber-50/50 p-2 rounded flex items-center gap-2">
-                            <i class="fa-solid fa-circle-info text-amber-500"></i>
-                            <span>${item.notes}</span>
+                        <div class="neu-pressed p-2 text-[11px] text-amber-700 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>${escapeHtml(item.notes)}</span>
                         </div>
                     ` : ''}
-                `;
-                container.appendChild(card);
-            });
+                </div>
+            `).join('');
         }
 
-        // RENDER BIDANG CARDS
         function renderBidang(data) {
             const container = document.getElementById('bidang-grid');
-            container.innerHTML = '';
+            container.innerHTML = data.map((item, index) => {
+                // Ketua avatar
+                const ketuaName = item.ketua || '';
+                const ketuaPhoto = avatarUrl(extractPersonName(ketuaName), 128);
 
-            data.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = 'bg-white rounded-xl p-6 shadow-sm border border-slate-200 hover:border-indigo-300 hover:shadow-md transition flex flex-col justify-between cursor-pointer group';
-                card.onclick = () => openModal(index);
-                
-                card.innerHTML = `
+                return `
+                <div onclick="openModal(${index})" class="neu-flat p-6 cursor-pointer hover:border-blue-500 transition flex flex-col justify-between">
                     <div>
-                        <div class="flex justify-between items-start gap-2 mb-3">
-                            <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-md uppercase tracking-wide">${item.kode}</span>
-                            <span class="text-xs text-slate-400 group-hover:text-indigo-600 transition"><i class="fa-solid fa-arrow-up-right-from-square"></i> Detail</span>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-bold text-blue-600">${escapeHtml(item.kode)}</span>
+                            <span class="text-[10px] text-slate-400"><i class="fa-solid fa-arrow-up-right-from-square"></i> Detail</span>
                         </div>
-                        <h3 class="font-bold text-slate-800 text-base mb-2 group-hover:text-indigo-600 transition line-clamp-2">${item.nama}</h3>
-                        <p class="text-slate-600 text-xs line-clamp-2 mb-4">${item.desc}</p>
+                        <h3 class="font-bold text-slate-800 text-sm mb-2">${escapeHtml(item.nama)}</h3>
+                        <div class="flex items-center gap-3 mb-2">
+                            <img src="${ketuaPhoto}" alt="Foto Ketua ${escapeHtml(ketuaName)}" class="avatar-xs">
+                            <p class="text-xs text-blue-700 font-semibold mb-0"><i class="fa-solid fa-user-tie mr-1"></i>${escapeHtml(ketuaName)}</p>
+                        </div>
+                        <p class="text-xs text-slate-500 line-clamp-2">${escapeHtml(item.desc)}</p>
                     </div>
+                    <div class="mt-4 pt-3 border-t border-slate-300">
+                        <p class="text-[10px] text-slate-400 font-bold uppercase">Program Utama:</p>
+                        <p class="text-xs text-slate-700 truncate"><i class="fa-solid fa-chevron-right text-blue-500 mr-1"></i>${escapeHtml(item.programs[0] || '')}</p>
+                    </div>
+                </div>
+            `}).join('');
+        }
 
-                    <div class="space-y-3 pt-3 border-t border-slate-100">
-                        <div>
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Program Utama:</span>
-                            <p class="text-xs text-slate-700 truncate"><i class="fa-solid fa-angle-right text-indigo-500 mr-1"></i>${item.programs[0]}</p>
-                        </div>
+        function renderPortofolio() {
+            const container = document.getElementById('portofolio-grid');
+            container.innerHTML = portofolioData.map(item => `
+                <div class="neu-flat p-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded">${escapeHtml(item.tag)}</span>
+                        <span class="text-[10px] text-slate-400">${escapeHtml(item.tgl)}</span>
                     </div>
-                `;
-                container.appendChild(card);
-            });
+                    <h3 class="font-bold text-slate-800 text-sm mb-2">${escapeHtml(item.judul)}</h3>
+                    <p class="text-xs text-slate-600">${escapeHtml(item.desc)}</p>
+                </div>
+            `).join('');
+        }
+
+        function renderKecamatan() {
+            const container = document.getElementById('kecamatan-grid');
+            container.innerHTML = kecamatanData.map(item => `
+                <div class="neu-flat p-5">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-location-dot text-red-500 text-sm"></i>
+                        <h3 class="font-bold text-slate-800 text-sm">${escapeHtml(item.nama)}</h3>
+                    </div>
+                    <p class="text-[11px] text-slate-500 mb-2">Pusat: <span class="font-semibold text-slate-700">${escapeHtml(item.pusat)}</span></p>
+                    <div class="neu-pressed p-2 text-[11px] text-blue-800">
+                        <p class="font-bold text-[10px] uppercase text-blue-600">Keunggulan:</p>
+                        <p>${escapeHtml(item.keunggulan)}</p>
+                    </div>
+                </div>
+            `).join('');
         }
 
         // TAB SWITCHING
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('nav button').forEach(el => {
-                el.classList.remove('active-tab');
-                el.classList.add('text-indigo-200');
+                el.classList.remove('active', 'text-blue-600');
+                el.classList.add('text-slate-600');
             });
 
-            document.getElementById(`section-${tabId}`).classList.remove('hidden');
+            document.getElementById(`sec-${tabId}`).classList.remove('hidden');
             const activeBtn = document.getElementById(`tab-${tabId}`);
-            activeBtn.classList.add('active-tab');
-            activeBtn.classList.remove('text-indigo-200');
+            activeBtn.classList.add('active', 'text-blue-600');
+
+            // If switching to hirarki, re-render so it fits container width
+            if(tabId === 'hirarki') {
+                setTimeout(() => renderHirarki(), 80);
+            }
         }
 
-        // MODAL HANDLERS
+        // FILTER BIDANG
+        function filterBidang() {
+            const q = document.getElementById('searchBidang').value.toLowerCase();
+            const filtered = bidangData.filter(b => 
+                b.nama.toLowerCase().includes(q) || 
+                (b.ketua && b.ketua.toLowerCase().includes(q)) ||
+                b.anggota.some(a => a.toLowerCase().includes(q))
+            );
+            renderBidang(filtered);
+        }
+
+        // MODAL FUNCTIONS
         function openModal(index) {
             const item = bidangData[index];
             document.getElementById('modalKode').innerText = item.kode;
             document.getElementById('modalJudul').innerText = item.nama;
-            document.getElementById('modalDeskripsi').innerText = item.desc;
+            document.getElementById('modalKetua').innerText = `Ketua Bidang: ${item.ketua}`;
+            document.getElementById('modalDesc').innerText = item.desc;
 
-            // Render Roles Badges
-            const rolesContainer = document.getElementById('modalRoles');
-            rolesContainer.innerHTML = item.roles.map(r => `<span class="bg-indigo-50 text-indigo-700 text-xs px-2.5 py-1 rounded-full font-medium border border-indigo-100"><i class="fa-solid fa-user-tag text-[10px] mr-1"></i>${r}</span>`).join('');
+            // Ketua photo
+            const ketuaPhoto = avatarUrl(extractPersonName(item.ketua));
+            document.getElementById('modalKetuaPhoto').src = ketuaPhoto;
+            document.getElementById('modalKetuaPhoto').alt = `Foto ${item.ketua}`;
 
-            // Render Programs List
-            const programsContainer = document.getElementById('modalPrograms');
-            programsContainer.innerHTML = item.programs.map(p => `<li class="leading-relaxed">${p}</li>`).join('');
+            // Anggota - build photo cards
+            const anggotaContainer = document.getElementById('modalAnggota');
+            anggotaContainer.innerHTML = ''; // clear
+            item.anggota.forEach(a => {
+                // a often like "Wakil Ketua: Antonius G." or "Anggota: Fajar M."
+                // extract the person name (after colon) or fallback to whole string
+                const personName = extractPersonName(a);
+                // If the token contains multiple names separated by comma (rare here), show each separately
+                const names = personName.split(',').map(s => s.trim()).filter(Boolean);
+                names.forEach(nm => {
+                    const photo = avatarUrl(nm, 64);
+                    const roleLabel = extractRoleLabel(a);
+                    anggotaContainer.innerHTML += `
+                        <div class="neu-flat p-2 flex items-center gap-3">
+                            <img src="${photo}" alt="Foto ${escapeHtml(nm)}" class="w-10 h-10 rounded-full object-cover">
+                            <div class="text-[11px]">
+                                <div class="font-semibold text-slate-700">${escapeHtml(nm)}</div>
+                                <div class="text-[10px] text-slate-500">${escapeHtml(roleLabel)}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            });
 
-            // Render KPI Badges
-            const kpiContainer = document.getElementById('modalKPI');
-            kpiContainer.innerHTML = item.kpi.map(k => `<span class="bg-emerald-50 text-emerald-700 text-xs px-2.5 py-1 rounded-md border border-emerald-100"><i class="fa-solid fa-chart-line mr-1 text-[10px]"></i>${k}</span>`).join('');
+            // Program
+            document.getElementById('modalPrograms').innerHTML = item.programs.map(p => `<li>${escapeHtml(p)}</li>`).join('');
 
-            // Render Notes
-            const notesContainer = document.getElementById('modalNotesContainer');
-            if (item.notes && item.notes.trim() !== "") {
+            // KPI
+            document.getElementById('modalKPI').innerText = item.kpi;
+
+            // Notes
+            const notesBox = document.getElementById('modalNotesBox');
+            if(item.notes) {
                 document.getElementById('modalNotes').innerText = item.notes;
-                notesContainer.classList.remove('hidden');
+                notesBox.classList.remove('hidden');
             } else {
-                notesContainer.classList.add('hidden');
+                notesBox.classList.add('hidden');
             }
 
-            const modal = document.getElementById('modalBidang');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+            document.getElementById('modalBidang').classList.remove('hidden');
+            document.getElementById('modalBidang').classList.add('flex');
         }
 
         function closeModal() {
-            const modal = document.getElementById('modalBidang');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+            document.getElementById('modalBidang').classList.add('hidden');
+            document.getElementById('modalBidang').classList.remove('flex');
         }
 
-        // SEARCH FUNCTIONALITY
-        function handleSearch() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            
-            // Filter Pengurus Inti
-            const filteredPengurus = pengurusIntiData.filter(p => 
-                p.role.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query)
-            );
-            renderPengurusInti(filteredPengurus);
+        /**
+         * RENDER HIRARKI (ORGANIZATIONAL CHART)
+         * - Draws an SVG org-chart representing:
+         *   Ketua Umum (root) => Wakil Ketua, Sekretaris, Bendahara, Koordinator Bidang => 14 Bidang
+         */
+        function renderHirarki() {
+            const container = document.getElementById('orgChartContainer');
+            // Build hierarchical nodes
+            const root = pengurusIntiData.find(p => p.role && p.role.toLowerCase().includes('ketua'));
+            const wakil = pengurusIntiData.find(p => p.role && p.role.toLowerCase().includes('wakil ketua'));
+            const sekre = pengurusIntiData.find(p => p.role && p.role.toLowerCase().includes('sekretaris'));
+            const bendahara = pengurusIntiData.find(p => p.role && p.role.toLowerCase().includes('bendahara'));
+            const koordinator = pengurusIntiData.find(p => p.role && p.role.toLowerCase().includes('koordinator'));
+            const penasehat = pengurusIntiData.find(p => p.role && p.role.toLowerCase().includes('penasehat'));
 
-            // Filter Bidang
-            const filteredBidang = bidangData.filter(b => 
-                b.nama.toLowerCase().includes(query) || 
-                b.desc.toLowerCase().includes(query) ||
-                b.programs.some(p => p.toLowerCase().includes(query))
-            );
-            renderBidang(filteredBidang);
+            // Dimensions
+            const vw = 1200;
+            const vh = 700;
+            const nodeW = 240;
+            const nodeH = 64;
+            const gapY = 96;
+
+            // Positions
+            const centerX = vw / 2;
+
+            // Compute positions
+            const positions = [];
+
+            // Root (Ketua) at top center
+            positions.push({ id: 'root', x: centerX - nodeW/2, y: 20, title: root.role, subtitle: root.nama });
+
+            // Level 1 (Wakil, Sekretaris, Bendahara, Koordinator) arranged horizontally
+            const level1 = [wakil, sekre, bendahara, koordinator].filter(Boolean);
+            const totalL1 = level1.length;
+            const spacingL1 = 280;
+            const startX = centerX - ((totalL1 - 1) * spacingL1) / 2;
+
+            level1.forEach((p, i) => {
+                positions.push({
+                    id: `l1-${i}`,
+                    x: startX + i * spacingL1 - nodeW/2,
+                    y: 20 + nodeH + gapY,
+                    title: p.role,
+                    subtitle: p.nama
+                });
+            });
+
+            // Level 2: Koordinator's children => 14 bidang nodes arranged in 2 rows of up to 7
+            const bidangCount = bidangData.length;
+            const perRow = 7;
+            const rowCount = Math.ceil(bidangCount / perRow);
+            const totalWidthForBidang = (perRow - 1) * 160 + nodeW;
+            const startBidangX = centerX - totalWidthForBidang / 2;
+            let idx = 0;
+            for(let r = 0; r < rowCount; r++) {
+                for(let c = 0; c < perRow; c++) {
+                    if(idx >= bidangCount) break;
+                    const x = startBidangX + c * 160 - nodeW/2;
+                    const y = 20 + (nodeH + gapY) * 2 + r * (nodeH + 48);
+                    const b = bidangData[idx];
+                    positions.push({
+                        id: `bid-${idx}`,
+                        x, y,
+                        title: b.kode,
+                        subtitle: b.nama.length > 48 ? b.nama.slice(0, 46) + '…' : b.nama
+                    });
+                    idx++;
+                }
+            }
+
+            // Penasehat positioned to the right as advisory
+            if(penasehat) {
+                positions.push({
+                    id: 'penasehat',
+                    x: centerX + (vw/4),
+                    y: 20 + nodeH + gapY,
+                    title: penasehat.role,
+                    subtitle: penasehat.nama
+                });
+            }
+
+            // Build SVG elements
+            let svg = `<svg class="w-full" viewBox="0 0 ${vw} ${vh}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hirarki Struktur Pengurus">`;
+
+            // Connectors: root -> level1 nodes
+            const rootPos = positions.find(p => p.id === 'root');
+            const l1 = positions.filter(p => p.id.startsWith('l1-'));
+            l1.forEach(n => {
+                const x1 = rootPos.x + nodeW/2;
+                const y1 = rootPos.y + nodeH;
+                const x2 = n.x + nodeW/2;
+                const y2 = n.y;
+                const midY = (y1 + y2) / 2;
+                svg += `<path class="org-connector" d="M ${x1} ${y1} C ${x1} ${midY} ${x2} ${midY} ${x2} ${y2}" />`;
+            });
+
+            // Connectors: one of level1 (koordinator) -> all bidang
+            const koorNode = positions.find(p => p.title && p.title.toLowerCase().includes('koordinator'));
+            if(koorNode) {
+                const anak = positions.filter(p => p.id.startsWith('bid-'));
+                anak.forEach(n => {
+                    const x1 = koorNode.x + nodeW/2;
+                    const y1 = koorNode.y + nodeH;
+                    const x2 = n.x + nodeW/2;
+                    const y2 = n.y;
+                    const midY = (y1 + y2) / 2;
+                    svg += `<path class="org-connector" d="M ${x1} ${y1} C ${x1} ${midY} ${x2} ${midY} ${x2} ${y2}" />`;
+                });
+            }
+
+            // Connectors: penasehat (dashed) to root
+            const pen = positions.find(p => p.id === 'penasehat');
+            if(pen) {
+                const x1 = pen.x + nodeW/2;
+                const y1 = pen.y + nodeH/2;
+                const x2 = rootPos.x + nodeW;
+                const y2 = rootPos.y + nodeH/2;
+                svg += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="4 4" />`;
+            }
+
+            // Draw nodes
+            positions.forEach(n => {
+                svg += `
+                    <g class="org-node" transform="translate(${n.x}, ${n.y})" tabindex="0" role="group" aria-label="${escapeHtml(n.title)} - ${escapeHtml(n.subtitle)}">
+                        <rect class="org-node-rect" width="${nodeW}" height="${nodeH}" rx="10" ry="10" />
+                        <text class="org-node-text" x="${12}" y="${20}">${escapeHtml(n.title)}</text>
+                        <text class="org-node-sub" x="${12}" y="${40}">${escapeHtml(n.subtitle)}</text>
+                    </g>
+                `;
+            });
+
+            svg += '</svg>';
+
+            container.innerHTML = svg;
+        }
+
+        // Utility: extract person's name from strings like "Wakil Ketua: Antonius G."
+        function extractPersonName(str) {
+            if(!str) return '';
+            if(str.includes(':')) {
+                return str.split(':').slice(1).join(':').trim();
+            }
+            // if "Nama, Gelar" return portion before comma often as name? Here prefer first part
+            if(str.includes(',')) {
+                // if format like "Agus Pratama, S.E." -> return first part
+                const parts = str.split(',');
+                // if the second part looks like an abbreviation (e.g., "S.E."), return first part
+                return parts[0].trim();
+            }
+            return str.trim();
+        }
+
+        // Utility: extract role label from "Wakil Ketua: Antonius G." -> "Wakil Ketua"
+        function extractRoleLabel(str) {
+            if(!str) return '';
+            if(str.includes(':')) {
+                return str.split(':')[0].trim();
+            }
+            return '';
+        }
+
+        // Utility: simple html escape for text in SVG and HTML
+        function escapeHtml(str) {
+            if(str === undefined || str === null) return '';
+            return String(str)
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#39;');
         }
     </script>
 </body>
-</html>
+                        </html>
