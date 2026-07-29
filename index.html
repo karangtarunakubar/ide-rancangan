@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Struktur Pengurus & Bidang Karang Taruna</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .active-tab {
+            border-bottom: 3px solid #2563eb;
+            color: #2563eb;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header / Navbar -->
+    <header class="bg-indigo-900 text-white shadow-lg sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-users-gear text-3xl text-amber-400"></i>
+                <div>
+                    <h1 class="text-xl font-bold leading-tight">Portal Organisasi Karang Taruna</h1>
+                    <p class="text-xs text-indigo-200">Kabupaten Kutai Barat</p>
+                </div>
+            </div>
+            <!-- Search Bar -->
+            <div class="relative w-full md:w-80">
+                <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Cari posisi, bidang, atau program..." class="w-full px-4 py-2 pl-10 rounded-lg text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white/90">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-sm"></i>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="bg-indigo-950 px-4">
+            <div class="max-w-7xl mx-auto flex overflow-x-auto space-x-6 text-sm">
+                <button onclick="switchTab('pengurus-inti')" id="tab-pengurus-inti" class="py-3 px-2 whitespace-nowrap active-tab hover:text-amber-300 transition">
+                    <i class="fa-solid fa-user-tie mr-2"></i>Pengurus Inti
+                </button>
+                <button onclick="switchTab('bidang')" id="tab-bidang" class="py-3 px-2 whitespace-nowrap text-indigo-200 hover:text-amber-300 transition">
+                    <i class="fa-solid fa-sitemap mr-2"></i>14 Bidang Kerja
+                </button>
+                <button onclick="switchTab('administrasi')" id="tab-administrasi" class="py-3 px-2 whitespace-nowrap text-indigo-200 hover:text-amber-300 transition">
+                    <i class="fa-solid fa-file-contract mr-2"></i>Pelaporan & SK
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
+
+        <!-- TAB 1: PENGURUS INTI -->
+        <section id="section-pengurus-inti" class="tab-content block">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-crown text-amber-500"></i> Susunan Pengurus Inti
+                </h2>
+                <p class="text-slate-600 text-sm">Pengambil keputusan strategis dan penanggung jawab operasional utama organisasi.</p>
+            </div>
+            <div id="pengurus-inti-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Injected by JS -->
+            </div>
+        </section>
+
+        <!-- TAB 2: 14 BIDANG KERJA -->
+        <section id="section-bidang" class="tab-content hidden">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-indigo-600"></i> Bidang & Divisi Operasional
+                </h2>
+                <p class="text-slate-600 text-sm">Klik kartu bidang untuk melihat struktur role, program kerja, dan indikator (KPI).</p>
+            </div>
+            <div id="bidang-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Injected by JS -->
+            </div>
+        </section>
+
+        <!-- TAB 3: PELAPORAN & TEMPLATE SK -->
+        <section id="section-administrasi" class="tab-content hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- System Pelaporan -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-3 bg-blue-100 text-blue-600 rounded-lg">
+                            <i class="fa-solid fa-clipboard-list text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">C. Tata Pelaporan Organisasi</h3>
+                            <p class="text-xs text-slate-500">Mekanisme & Akuntabilitas Kerja</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4 text-sm text-slate-700">
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
+                            <p class="font-semibold text-slate-900 mb-1">Jadwal Pelaporan:</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li><strong>Bulanan:</strong> Diserahkan ke Sekretariat.</li>
+                                <li><strong>Triwulan:</strong> Laporan evaluasi ke Ketua Umum.</li>
+                                <li><strong>Tahunan:</strong> Evaluasi akhir tahun masa bakti.</li>
+                            </ul>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
+                            <p class="font-semibold text-slate-900 mb-1">Format Wajib Laporan:</p>
+                            <p>Ringkasan Kegiatan | Anggaran Terpakai | Kebutuhan/Kendala</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
+                            <p class="font-semibold text-slate-900 mb-1">Indikator Evaluasi (KPI):</p>
+                            <p>Kepatuhan Pelaporan (%) & Ketepatan Waktu Pengiriman.</p>
+                        </div>
+                        <div class="p-3 bg-amber-50 text-amber-900 border border-amber-200 rounded-lg flex items-center gap-2">
+                            <i class="fa-solid fa-triangle-exclamation text-amber-600"></i>
+                            <span>Catatan: Seluruh laporan diserahkan langsung ke <strong>Sekretaris Umum</strong>.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template SK -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-3 bg-emerald-100 text-emerald-600 rounded-lg">
+                                <i class="fa-solid fa-file-pdf text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold">D. Template SK & Legalitas</h3>
+                                <p class="text-xs text-slate-500">Format Surat Keputusan Organisasi</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-xs mb-4 space-y-2 overflow-x-auto">
+                            <p class="text-slate-400">// Contoh Judul & Format SK</p>
+                            <p class="font-bold text-white">SURAT KEPUTUSAN KETUA KARANG TARUNA KABUPATEN KUTAI BARAT</p>
+                            <p>Nomor: [Nomor_Surat]/SK/KT-KUBAR/[Tahun]</p>
+                            <p>Tentang: Pengangkatan Pengurus Karang Taruna Masa Bakti [Tahun]</p>
+                            <p class="text-slate-400">// Lampiran PDF</p>
+                            <p>Termasuk susunan pengurus inti & 14 bidang beserta penugasan resmi.</p>
+                        </div>
+                    </div>
+                    <button onclick="alert('Mengunduh contoh template SK...')" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-download"></i> Unduh Template SK (PDF)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal Detail Bidang -->
+    <div id="modalBidang" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative flex flex-col">
+            <!-- Modal Header -->
+            <div class="p-6 bg-indigo-900 text-white rounded-t-2xl sticky top-0 z-10 flex justify-between items-start">
+                <div>
+                    <span id="modalKode" class="text-xs bg-amber-400 text-slate-900 font-bold px-2 py-0.5 rounded uppercase">Kode</span>
+                    <h3 id="modalJudul" class="text-xl font-bold mt-1">Nama Bidang</h3>
+                </div>
+                <button onclick="closeModal()" class="text-white/80 hover:text-white text-2xl font-bold leading-none">&times;</button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 space-y-6 flex-grow">
+                <!-- Deskripsi Ketua -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Tugas Utama Ketua Bidang</h4>
+                    <p id="modalDeskripsi" class="text-slate-700 text-sm bg-slate-50 p-3 rounded-lg border border-slate-100">---</p>
+                </div>
+
+                <!-- Struktur Roles -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Struktur Internal Bidang</h4>
+                    <div id="modalRoles" class="flex flex-wrap gap-2">
+                        <!-- JS injected -->
+                    </div>
+                </div>
+
+                <!-- Program Kerja -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Program Kerja Utama</h4>
+                    <ul id="modalPrograms" class="list-disc pl-5 text-sm text-slate-700 space-y-1">
+                        <!-- JS injected -->
+                    </ul>
+                </div>
+
+                <!-- Indikator KPI -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Indikator Keberhasilan (KPI)</h4>
+                    <div id="modalKPI" class="flex flex-wrap gap-2">
+                        <!-- JS injected -->
+                    </div>
+                </div>
+
+                <!-- Catatan / Notes -->
+                <div id="modalNotesContainer" class="p-3 bg-amber-50 border border-amber-200 rounded-lg text-sm text-amber-900">
+                    <span class="font-bold"><i class="fa-solid fa-lightbulb mr-1 text-amber-600"></i> Catatan Khusus:</span>
+                    <p id="modalNotes" class="mt-0.5 text-xs text-amber-800">---</p>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 bg-slate-50 border-t border-slate-100 rounded-b-2xl flex justify-end">
+                <button onclick="closeModal()" class="px-5 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-sm font-semibold rounded-lg transition">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs border-t border-slate-800">
+        <p>&copy; 2026 Karang Taruna Kabupaten Kutai Barat. Sistem Informasi Manajemen Organisasi.</p>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // DATA STORE
+        const pengurusIntiData = [
+            { role: "Ketua Umum", desc: "Pimpinan tertinggi organisasi; pengambilan keputusan strategis.", notes: "Masa bakti: 2/3 tahun; rapat bulanan", icon: "fa-user-gear" },
+            { role: "Wakil Ketua", desc: "Membantu Ketua Umum, menggantikan jika berhalangan.", notes: "-", icon: "fa-user-check" },
+            { role: "Sekretaris Umum", desc: "Administrasi organisasi, pencatatan rapat, korespondensi.", notes: "-", icon: "fa-file-signature" },
+            { role: "Wakil Sekretaris", desc: "Mendampingi Sekretaris Umum.", notes: "-", icon: "fa-file-lines" },
+            { role: "Bendahara Umum", desc: "Pengelolaan keuangan organisasi, laporan keuangan.", notes: "SOP keuangan wajib", icon: "fa-wallet" },
+            { role: "Koordinator Bidang", desc: "Koordinator untuk tiap bidang (14 bidang).", notes: "Satu koordinator per bidang", icon: "fa-diagram-project" },
+            { role: "Dewan Penasehat", desc: "Tokoh masyarakat/pemerintah sebagai penasihat.", notes: "Opsional; bisa wakil kecamatan/desa", icon: "fa-user-shield" }
+        ];
+
+        const bidangData = [
+            {
+                kode: "B1",
+                nama: "Bidang Organisasi, Kaderisasi & Pengembangan SDM",
+                desc: "Memimpin program kaderisasi dan pengembangan kapasitas.",
+                roles: ["Ketua Bidang", "Wakil Ketua Bidang", "Sekretaris Bidang", "Bendahara/Koord Program", "Anggota Pelaksana"],
+                programs: ["Program Kaderisasi", "Pelatihan manajemen organisasi & administrasi", "Pembinaan kader desa/kecamatan"],
+                kpi: ["Jumlah kader terlatih", "Tingkat retensi anggota", "Jumlah kader aktif"],
+                notes: ""
+            },
+            {
+                kode: "B2",
+                nama: "Bidang Kesejahteraan Sosial",
+                desc: "Koordinasi program sosial & bantuan masyarakat rentan.",
+                roles: ["Ketua Bidang", "Wakil Ketua Bidang", "Sekretaris Bidang"],
+                programs: ["Pendataan & pendampingan keluarga rentan", "Bantuan darurat & distribusi", "Program kesehatan dasar"],
+                kpi: ["Jumlah keluarga dibantu", "Kepuasan penerima manfaat", "Frekuensi aksi tanggap"],
+                notes: "Kerja sama puskesmas/dinas sosial"
+            },
+            {
+                kode: "B3",
+                nama: "Bidang Perekonomian, Koperasi & UMKM",
+                desc: "Fasilitasi pengembangan UMKM, koperasi, akses pembiayaan.",
+                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
+                programs: ["Pelatihan kewirausahaan & pemasaran digital", "Pendampingan koperasi pemuda", "Pameran produk lokal"],
+                kpi: ["Jumlah UMKM didampingi", "Peningkatan omzet rata-rata", "Koperasi terdaftar"],
+                notes: "Fokus pemasaran lokal & digital"
+            },
+            {
+                kode: "B4",
+                nama: "Bidang Pengembangan Pendidikan, Keagamaan & Pembinaan Mental",
+                desc: "Program literasi, bimbel, pembinaan keagamaan & kesehatan mental.",
+                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
+                programs: ["Bimbel gratis", "Kajian keagamaan lintas pemuda", "Layanan konseling mental"],
+                kpi: ["Peserta bimbel & kenaikan nilai", "Sesi konseling", "Partisipasi kajian"],
+                notes: "Kerja sama sekolah & lembaga keagamaan"
+            },
+            {
+                kode: "B5",
+                nama: "Bidang Pemberdayaan Perempuan & Perlindungan Anak",
+                desc: "Advokasi hak perempuan & anak; pemberdayaan ekonomi perempuan.",
+                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
+                programs: ["Pelatihan keterampilan ekonomi perempuan", "Sosialisasi perlindungan anak & posko pengaduan", "Support group korban kekerasan"],
+                kpi: ["Jumlah peserta", "Kasus tertangani & rujukan", "Akses layanan meningkat"],
+                notes: "Koordinasi Dinas PPA/LBH"
+            },
+            {
+                kode: "B6",
+                nama: "Bidang Pemuda & Olahraga",
+                desc: "Pembinaan olahraga, klub, kegiatan sehat.",
+                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
+                programs: ["Turnamen antar desa/kecamatan", "Pembentukan klub atlet", "Program gaya hidup sehat"],
+                kpi: ["Jumlah event & peserta", "Atlet daerah", "Tingkat partisipasi pemuda"],
+                notes: "Fokus pembinaan berkelanjutan"
+            },
+            {
+                kode: "B7",
+                nama: "Bidang Seni Budaya & Pariwisata",
+                desc: "Pelestarian budaya & pengembangan pariwisata berbasis komunitas.",
+                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
+                programs: ["Festival seni budaya tahunan", "Pelatihan pemandu wisata & homestay", "Dokumentasi budaya lokal"],
+                kpi: ["Jumlah event & pengunjung", "Dokumentasi budaya", "Pemasukan pariwisata komunitas"],
+                notes: "Libatkan tokoh adat"
+            },
+            {
+                kode: "B8",
+                nama: "Bidang Lingkungan Hidup",
+                desc: "Aksi konservasi, kebersihan, penghijauan.",
+                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
+                programs: ["Gerakan bersih desa/sungai", "Penghijauan & reboisasi", "Sosialisasi pengelolaan sampah & 3R"],
+                kpi: ["Areal penghijauan", "Volume sampah terkelola", "Partisipasi masyarakat"],
+                notes: "Kerja sama Dinas Lingkungan"
+            },
+            {
+                kode: "B9",
+                nama: "Bidang Advokasi, Hukum & HAM",
+                desc: "Advokasi kebijakan pro-pemuda, bantuan informasi hukum dasar.",
+                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
+                programs: ["Klinik hukum keliling", "Kampanye HAM & hak pemuda", "Advokasi kebijakan publik"],
+                kpi: ["Jumlah kasus didampingi", "Rekomendasi regulasi", "Kegiatan advokasi terealisasi"],
+                notes: "Kerja sama LKBH/LSM hukum"
+            },
+            {
+                kode: "B10",
+                nama: "Bidang Media dan Publikasi",
+                desc: "Komunikasi internal/eksternal, dokumentasi kegiatan.",
+                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
+                programs: ["Konten & kalender publikasi", "Dokumentasi audio-visual", "Arsip digital kegiatan"],
+                kpi: ["Jangkauan & engagement", "Konsistensi publikasi", "Ketersediaan arsip"],
+                notes: "Manajemen media sosial terpusat"
+            },
+            {
+                kode: "B11",
+                nama: "Bidang Hubungan Masyarakat & Antar Lembaga",
+                desc: "Jejaring dengan pemerintah, LSM, kampus, swasta.",
+                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
+                programs: ["MoU dengan instansi strategis", "Forum antar lembaga", "Fasilitasi partisipasi pemuda di musyawarah"],
+                kpi: ["Jumlah kerjasama resmi", "Partisipasi forum", "Sumber pendanaan kolaboratif"],
+                notes: "Bangun relasi jangka panjang"
+            },
+            {
+                kode: "B12",
+                nama: "Bidang Penanggulangan Bencana",
+                desc: "Mitigasi, kesiapsiagaan & respon cepat bencana.",
+                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
+                programs: ["Pelatihan tanggap darurat & simulasi", "Tim relawan siaga bencana", "Gudang & logistik bantuan"],
+                kpi: ["Waktu respons", "Jumlah relawan terlatih", "Kesiapan logistik"],
+                notes: "Sinkronisasi BPBD & dinas terkait"
+            },
+            {
+                kode: "B13",
+                nama: "Bidang Pemberdayaan Masyarakat",
+                desc: "Program inklusif peningkatan kapasitas masyarakat.",
+                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
+                programs: ["Pelatihan vokasi", "Program inklusi sosial", "Fasilitasi kelompok swadaya"],
+                kpi: ["Peserta tersertifikasi", "Integrasi kelompok rentan", "Dampak ekonomi rumah tangga"],
+                notes: "Koordinasi perangkat desa"
+            },
+            {
+                kode: "B14",
+                nama: "Bidang Penelitian, Pengembangan & Teknologi",
+                desc: "Riset kebutuhan & inovasi teknologi komunitas.",
+                roles: ["Ketua Bidang", "Wakil Ketua Bidang"],
+                programs: ["Survei kebutuhan & evaluasi program", "Solusi teknologi untuk UMKM/pendidikan", "Workshop literasi digital"],
+                kpi: ["Laporan riset terbit", "Adopsi teknologi", "Efisiensi program meningkat"],
+                notes: "Dokumentasi & dashboard data"
+            }
+        ];
+
+        // INITIALIZATION
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPengurusInti(pengurusIntiData);
+            renderBidang(bidangData);
+        });
+
+        // RENDER PENGURUS INTI
+        function renderPengurusInti(data) {
+            const container = document.getElementById('pengurus-inti-grid');
+            container.innerHTML = '';
+            
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition flex flex-col justify-between';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="p-3 bg-indigo-50 text-indigo-600 rounded-lg">
+                                <i class="fa-solid ${item.icon} text-lg"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-lg">${item.role}</h3>
+                        </div>
+                        <p class="text-slate-600 text-sm mb-4 leading-relaxed">${item.desc}</p>
+                    </div>
+                    ${item.notes && item.notes !== '-' ? `
+                        <div class="pt-3 border-t border-slate-100 text-xs text-amber-700 bg-amber-50/50 p-2 rounded flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-amber-500"></i>
+                            <span>${item.notes}</span>
+                        </div>
+                    ` : ''}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // RENDER BIDANG CARDS
+        function renderBidang(data) {
+            const container = document.getElementById('bidang-grid');
+            container.innerHTML = '';
+
+            data.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl p-6 shadow-sm border border-slate-200 hover:border-indigo-300 hover:shadow-md transition flex flex-col justify-between cursor-pointer group';
+                card.onclick = () => openModal(index);
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start gap-2 mb-3">
+                            <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-md uppercase tracking-wide">${item.kode}</span>
+                            <span class="text-xs text-slate-400 group-hover:text-indigo-600 transition"><i class="fa-solid fa-arrow-up-right-from-square"></i> Detail</span>
+                        </div>
+                        <h3 class="font-bold text-slate-800 text-base mb-2 group-hover:text-indigo-600 transition line-clamp-2">${item.nama}</h3>
+                        <p class="text-slate-600 text-xs line-clamp-2 mb-4">${item.desc}</p>
+                    </div>
+
+                    <div class="space-y-3 pt-3 border-t border-slate-100">
+                        <div>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Program Utama:</span>
+                            <p class="text-xs text-slate-700 truncate"><i class="fa-solid fa-angle-right text-indigo-500 mr-1"></i>${item.programs[0]}</p>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // TAB SWITCHING
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('nav button').forEach(el => {
+                el.classList.remove('active-tab');
+                el.classList.add('text-indigo-200');
+            });
+
+            document.getElementById(`section-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            activeBtn.classList.add('active-tab');
+            activeBtn.classList.remove('text-indigo-200');
+        }
+
+        // MODAL HANDLERS
+        function openModal(index) {
+            const item = bidangData[index];
+            document.getElementById('modalKode').innerText = item.kode;
+            document.getElementById('modalJudul').innerText = item.nama;
+            document.getElementById('modalDeskripsi').innerText = item.desc;
+
+            // Render Roles Badges
+            const rolesContainer = document.getElementById('modalRoles');
+            rolesContainer.innerHTML = item.roles.map(r => `<span class="bg-indigo-50 text-indigo-700 text-xs px-2.5 py-1 rounded-full font-medium border border-indigo-100"><i class="fa-solid fa-user-tag text-[10px] mr-1"></i>${r}</span>`).join('');
+
+            // Render Programs List
+            const programsContainer = document.getElementById('modalPrograms');
+            programsContainer.innerHTML = item.programs.map(p => `<li class="leading-relaxed">${p}</li>`).join('');
+
+            // Render KPI Badges
+            const kpiContainer = document.getElementById('modalKPI');
+            kpiContainer.innerHTML = item.kpi.map(k => `<span class="bg-emerald-50 text-emerald-700 text-xs px-2.5 py-1 rounded-md border border-emerald-100"><i class="fa-solid fa-chart-line mr-1 text-[10px]"></i>${k}</span>`).join('');
+
+            // Render Notes
+            const notesContainer = document.getElementById('modalNotesContainer');
+            if (item.notes && item.notes.trim() !== "") {
+                document.getElementById('modalNotes').innerText = item.notes;
+                notesContainer.classList.remove('hidden');
+            } else {
+                notesContainer.classList.add('hidden');
+            }
+
+            const modal = document.getElementById('modalBidang');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modalBidang');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // SEARCH FUNCTIONALITY
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            
+            // Filter Pengurus Inti
+            const filteredPengurus = pengurusIntiData.filter(p => 
+                p.role.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query)
+            );
+            renderPengurusInti(filteredPengurus);
+
+            // Filter Bidang
+            const filteredBidang = bidangData.filter(b => 
+                b.nama.toLowerCase().includes(query) || 
+                b.desc.toLowerCase().includes(query) ||
+                b.programs.some(p => p.toLowerCase().includes(query))
+            );
+            renderBidang(filteredBidang);
+        }
+    </script>
+</body>
+</html>
