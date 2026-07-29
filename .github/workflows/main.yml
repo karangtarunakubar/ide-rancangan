@@ -1,1 +1,38 @@
+name: Main Workflow for IDE Rancangan
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+    - name: Cache pip packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+    - name: Run Jupyter Notebook
+      run: jupyter nbconvert --to notebook --execute notebook.ipynb --output executed_notebook.ipynb
+    - name: Validate generated CSV files
+      run: python validate_csv.py
+    - name: Commit and push changes
+      if: github.event_name == 'push'
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "chore: Auto-update generated data files [skip ci]"
+        file_pattern: "*.csv executed_notebook.ipynb"
 
