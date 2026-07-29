@@ -1,0 +1,63 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Runs on pushes targeting the main branch
+  push:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Cache npm packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-global-${{ hashFiles('**/deploy.yml') }} # Use workflow file hash as a proxy
+          restore-keys: |
+            ${{ runner.os }}-npm-global-
+      - name: Optimize Images
+        run: |
+          # Install imagemin and plugins for different image types
+          npm install -g imagemin-cli imagemin-jpegtran imagemin-pngquant imagemin-gifsicle
+          # Run optimization on the assets directory, overwriting the files in the runner
+          imagemin assets/images/**/*.{jpg,jpeg,png,gif} --out-dir=assets/images
+      - name: Inject build timestamp
+        run: |
+          TIMESTAMP=$(date -u +"%B %d, %Y at %H:%M UTC")
+          # Replace the placeholder in the target element with the timestamp
+          sed -i "s|<!-- LAST_UPDATED_PLACEHOLDER -->|<p id=\"last-updated\" class=\"text-\[10px\] text-slate-400 mt-1\">Last updated on ${TIMESTAMP}<\/p>|g" index.html
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload all files in the root directory, including CSVs and the assets folder
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
