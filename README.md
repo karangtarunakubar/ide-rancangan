@@ -5,7 +5,7 @@ Karang Taruna [Kutai Barat merupakan organisasi kemasyarakatan wadah pengembanga
 
 # Draf Structure pengurus 
 **
-Pengurus_Karang_Taruna_Kutai_Barat.csv
+https://github.com/karangtarunakubar/ide-rancangan/Pengurus_Karang_Taruna_Kutai_Barat.csv
 **
 
 ## Program Masing-masing Bidang 2/3 Tahun kedepan
