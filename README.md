@@ -4,7 +4,9 @@ Karang Taruna Kutai Barat
 Karang Taruna [Kutai Barat merupakan organisasi kemasyarakatan wadah pengembangan generasi muda yang tumbuh dan berkembang atas dasar kesadaran dan tanggung jawab sosial dari, oleh, dan untuk masyarakat, khususnya generasi muda di wilayah-wilayah di kecamatan Kutai Barat.
 
 # Draf Structure pengurus 
-**https://github.com/karangtarunakubar/ide-rancangan/Pengurus_Karang_Taruna_Kutai_Barat.csv**
+**
+Pengurus_Karang_Taruna_Kutai_Barat.csv
+**
 
 ## Program Masing-masing Bidang 2/3 Tahun kedepan
 
