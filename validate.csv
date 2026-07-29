@@ -1,0 +1,127 @@
+import pandas as pd
+import os
+import sys
+import json
+
+def validate_csv(filepath, required_columns, min_rows=1, name="Data"):
+    """Validates a single CSV file."""
+    if not os.path.exists(filepath):
+        print(f"Error: {name} CSV file not found at {filepath}")
+        return False
+
+    try:
+        df = pd.read_csv(filepath)
+    except pd.errors.EmptyDataError:
+        print(f"Error: {name} CSV file is empty at {filepath}")
+        return False
+    except Exception as e:
+        print(f"Error reading {name} CSV file {filepath}: {e}")
+        return False
+
+    if df.empty and min_rows > 0:
+        print(f"Error: {name} CSV file is empty.")
+        return False
+
+    if len(df) < min_rows:
+        print(f"Error: {name} CSV file has fewer than {min_rows} rows.")
+        return False
+
+    missing_columns = [col for col in required_columns if col not in df.columns]
+    if missing_columns:
+        print(f"Error: {name} CSV file is missing required columns: {', '.join(missing_columns)}")
+        return False
+
+    print(f"Validation successful for {name} ({len(df)} rows).")
+    return True
+
+def validate_image_paths(df, column_name, data_name):
+    """Checks if local image paths in a DataFrame column exist."""
+    if column_name not in df.columns:
+        return True # Column doesn't exist, skip validation
+
+    all_paths_valid = True
+    for index, row in df.iterrows():
+        path = row[column_name]
+        # Skip validation for empty paths or external URLs
+        if pd.isna(path) or not path or str(path).startswith('http'):
+            continue
+        if not os.path.exists(path):
+            print(f"Error: [{data_name}] Image not found at path: '{path}' (row {index + 2})")
+            all_paths_valid = False
+    return all_paths_valid
+
+def validate_nested_image_paths(df, column_name, nested_key, data_name):
+    """Checks image paths within a JSON string column."""
+    if column_name not in df.columns:
+        return True # Column doesn't exist, skip validation
+
+    all_paths_valid = True
+    for index, row in df.iterrows():
+        json_str = row[column_name]
+        try:
+            items = json.loads(json_str)
+            if not isinstance(items, list):
+                continue
+            for item_index, item in enumerate(items):
+                path = item.get(nested_key)
+                if not path or str(path).startswith('http'):
+                    continue
+                if not os.path.exists(path):
+                    print(f"Error: [{data_name}] Nested image not found in '{column_name}' at path: '{path}' (row {index + 2}, item {item_index + 1})")
+                    all_paths_valid = False
+        except (json.JSONDecodeError, TypeError):
+            # Ignore if the content is not a valid JSON string or not iterable
+            continue
+    return all_paths_valid
+
+def validate_duplicates(df, column_name, data_name):
+    """Checks for duplicate values in a specific column of a DataFrame."""
+    if column_name not in df.columns:
+        # This case is already handled by validate_csv, so we can skip here.
+        return True
+
+    duplicates = df[df.duplicated(subset=[column_name], keep=False)]
+    if not duplicates.empty:
+        print(f"Error: [{data_name}] Found duplicate entries in column '{column_name}':")
+        for index, row in duplicates.iterrows():
+            print(f"  - Row {index + 2}: '{row[column_name]}'")
+        return False
+    return True
+
+def main():
+    all_valid = True
+
+    # Validate pengurus_inti.csv
+    if validate_csv('pengurus_inti.csv', ['nama', 'role', 'desc'], name="Pengurus Inti"):
+        df_pengurus = pd.read_csv('pengurus_inti.csv')
+        all_valid &= validate_duplicates(df_pengurus, 'nama', 'Pengurus Inti')
+        all_valid &= validate_image_paths(df_pengurus, 'avatar', 'Pengurus Inti')
+
+    # Validate bidang_data.csv
+    if validate_csv('bidang_data.csv', ['kode', 'nama', 'ketua', 'desc', 'anggota', 'programs'], name="Bidang Data"):
+        df_bidang = pd.read_csv('bidang_data.csv')
+        all_valid &= validate_duplicates(df_bidang, 'kode', 'Bidang Data')
+        all_valid &= validate_image_paths(df_bidang, 'ketuaAvatar', 'Bidang Data')
+        all_valid &= validate_nested_image_paths(df_bidang, 'anggota', 'avatar', 'Bidang Data')
+
+    # Validate portofolio.csv
+    if validate_csv('portofolio.csv', ['judul', 'tgl', 'desc', 'tag'], name="Portofolio Data"):
+        # No unique key validation needed for portofolio for now, but structure is ready.
+        pass
+
+    # Validate kecamatan.csv
+    if validate_csv('kecamatan.csv', ['nama', 'pusat', 'keunggulan'], name="Kecamatan Data"):
+        df_kecamatan = pd.read_csv('kecamatan.csv')
+        all_valid &= validate_duplicates(df_kecamatan, 'nama', 'Kecamatan Data')
+
+    # Validate umkm.csv
+    if validate_csv('umkm.csv', ['nama', 'jenis', 'pemilik', 'deskripsi'], name="UMKM Data"):
+        df_umkm = pd.read_csv('umkm.csv')
+        all_valid &= validate_duplicates(df_umkm, 'nama', 'UMKM Data')
+        all_valid &= validate_image_paths(df_umkm, 'logo', 'UMKM Data')
+
+    if not all_valid:
+        sys.exit(1) # Exit with error code if any validation fails
+
+if __name__ == "__main__":
+    main()
